@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>聊天室</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #top-bar {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px;
+      background: #2c2c2c;
+      border-bottom: 1px solid #444;
+      gap: 10px;
+    }
+
+    #top-bar button {
+      background: #555;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #top-bar button:hover {
+      background: #777;
+    }
+
+    #group-user-status {
+      font-size: 14px;
+      color: #aaa;
+      margin-left: auto;
+    }
+
+    #status {
+      padding: 6px 12px;
+      font-size: 14px;
+      background: #444;
+      text-align: center;
+    }
+
+    #container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .page {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    #group-list, #lobby-page, #profile-page {
+      padding: 20px;
+    }
+
+    .group-card {
+      display: flex;
+      align-items: center;
+      background: #333;
+      border: 1px solid #555;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .group-cover {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .group-info {
+      flex: 1;
+    }
+
+    .group-title {
+      font-weight: bold;
+    }
+
+    .group-code {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .group-last-chat {
+      font-size: 13px;
+      color: #ccc;
+      margin-top: 5px;
+    }
+
+    .unread-badge {
+      background: red;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    #tab-bar {
+      display: flex;
+      background: #2c2c2c;
+      border-top: 1px solid #444;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      cursor: pointer;
+      background: #2c2c2c;
+    }
+
+    .tab.active {
+      background: #007acc;
+    }
+  </style>
+</head>
+<body>
+<div id="top-bar">
+  <div id="group-user-status">聊天室</div>
+</div>
+<div id="status">Connecting...</div>
+<div id="container">
+  <div id="group-list" class="page"></div>
+  <div id="lobby-page" class="page"></div>
+  <div id="chat-page" class="page">
+    <div style="padding: 10px; border-bottom: 1px solid #444; background: #2c2c2c;">
+      <button id="chat-back-btn" style="padding: 6px 12px; font-size: 14px; background: #555; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        ← 返回我的群组
+      </button>
+    </div>
+    <div id="chat-messages" style="padding: 20px;"></div>
+    <div id="chat-input" style="padding: 10px; border-top: 1px solid #444; background: #2c2c2c; display: flex;">
+      <input id="chat-text" type="text" placeholder="输入讯息..." style="flex:1; padding:8px; font-size:14px; border-radius:4px; border:none;">
+      <button id="chat-send" style="margin-left:10px; padding: 8px 16px; font-size:14px; border:none; border-radius:4px; background:#007acc; color:white; cursor:pointer;">发送</button>
+    </div>
+  </div>
+  <div id="profile-page" class="page">
+    <h2>我的资讯</h2>
+    <p>聊天号：<span id="user-code"></span></p>
+  </div>
+</div>
+<div id="tab-bar">
+  <div class="tab active" data-page="group-list">我的群组</div>
+  <div class="tab" data-page="lobby-page">大厅</div>
+  <div class="tab" data-page="profile-page">我的资讯</div>
+</div>
+
+<script>
+
+  const API_BASE_URL = 'http://localhost:9501';
+  // const API_BASE_URL = 'https://chat.test.thanksin.top';
+
+  const WS_URL = 'ws://127.0.0.1:9502/ws';
+  // const WS_URL = 'wss://chat.test.thanksin.top/ws';
+
+  const LOGIN_TOKEN = new URLSearchParams(location.search).get('l') ?? '';
+  let ws, apiToken = '';
+  let currentGroupId = 0;
+
+  const statusEl = document.getElementById('status');
+  const groupListEl = document.getElementById('group-list');
+  const lobbyPage = document.getElementById('lobby-page');
+  const chatPage = document.getElementById('chat-page');
+  const chatMessages = document.getElementById('chat-messages');
+  const userCodeEl = document.getElementById('user-code');
+  const chatInput = document.getElementById('chat-text');
+  const chatSendBtn = document.getElementById('chat-send');
+
+  const tabs = document.querySelectorAll('.tab');
+  const pages = document.querySelectorAll('.page');
+
+  function updateLastRead(groupId, chatId) {
+    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    ws.send(JSON.stringify({
+      type: 'update_last_read',
+      data: {
+        group_id: groupId,
+        chat_id: chatId
+      }
+    }));
+  }
+
+  tabs.forEach(tab => {
+    tab.onclick = () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      pages.forEach(p => p.style.display = 'none');
+      document.getElementById(tab.dataset.page).style.display = 'flex';
+
+      if (tab.dataset.page === 'profile-page') {
+        ws.send(JSON.stringify({ type: 'enter_self' }));
+      } else if (tab.dataset.page === 'group-list') {
+        ws.send(JSON.stringify({ type: 'enter_my_group' }));
+      } else if (tab.dataset.page === 'lobby-page') {
+        ws.send(JSON.stringify({ type: 'enter_lobby', data : { join_state : 0 } }));
+      }
+    };
+  });
+
+  function connectWS() {
+    ws = new WebSocket(WS_URL);
+    ws.onopen = () => {
+      statusEl.textContent = '已连线，正在登入...';
+      ws.send(JSON.stringify({ type: 'login', data: { token: LOGIN_TOKEN, meta : { test_meta : 1 }  } }));
+    };
+    ws.onmessage = event => {
+      const msg = JSON.parse(event.data);
+      switch (msg.type) {
+        case 'login_ok':
+          apiToken = msg.data.user.api;
+          statusEl.textContent = '登入成功';
+          renderGroupList(msg.data.my_group.groups);
+          showPage('group-list');
+          break;
+        case 'enter_my_group_ok':
+          renderGroupList(msg.data.my_group.groups);
+          break;
+        case 'enter_lobby_ok':
+          renderLobbyList(msg.data.groups);
+          break;
+        case 'enter_group_ok':
+          currentGroupId = msg.data.group.id;
+          renderChatPage(msg.data, true);
+          break;
+        case 'enter_sys_group_ok':
+          currentGroupId = 0;
+          renderChatPage({ chat_list: msg.data.chat_list }, false);
+          break;
+        case 'enter_self_ok':
+          userCodeEl.textContent = msg.data.code;
+          break;
+        case 'send_chat_ok':
+          chatInput.value = '';
+          break;
+        case 'chat_cast':
+          appendChatMessage(msg.data);
+          updateLastRead(currentGroupId, msg.data.id);
+          break;
+        case 'sys_group_chat_ack':
+          if (chatPage.dataset.sysGroup === 'true') {
+            appendChatMessage(msg.data);
+          }
+          break;
+        case 'update_last_read_ok':
+          break;
+      }
+    };
+    ws.onclose = () => {
+      statusEl.textContent = '连接已断开';
+      statusEl.style.background = '#8b0000';
+    };
+  }
+
+  function showPage(pageId) {
+    tabs.forEach(t => t.classList.remove('active'));
+    const targetTab = document.querySelector(`.tab[data-page="${pageId}"]`);
+    if (targetTab) targetTab.classList.add('active');
+    pages.forEach(p => p.style.display = 'none');
+    document.getElementById(pageId).style.display = 'flex';
+  }
+
+  function renderGroupList(groups) {
+    groupListEl.innerHTML = '';
+    const sysCard = document.createElement('div');
+    sysCard.className = 'group-card';
+    sysCard.innerHTML = `
+    <img class="group-cover" src="https://d1zhhyloqq8jns.cloudfront.net/uploads/chat/default/sys_group/default_cover.png">
+    <div class="group-info">
+      <div class="group-title">系统消息</div>
+      <div class="group-code">系统通知群</div>
+      <div class="group-last-chat">点击查看系统通知</div>
+    </div>
+  `;
+    sysCard.onclick = () => {
+      ws.send(JSON.stringify({ type: 'enter_sys_group' }));
+    };
+    groupListEl.appendChild(sysCard);
+
+    if (!Array.isArray(groups) || groups.length === 0) {
+      groupListEl.innerHTML += '<p style="padding:10px;">暂无群组</p>';
+      return;
+    }
+
+    groups.forEach(g => {
+      const card = createGroupCard(g);
+      card.onclick = () => ws.send(JSON.stringify({ type: 'enter_group', data: { group_id: g.id }, meta : { test_meta : 1 } }));
+      groupListEl.appendChild(card);
+    });
+  }
+
+  function renderLobbyList(groups) {
+    lobbyPage.innerHTML = '';
+    if (!Array.isArray(groups) || groups.length === 0) {
+      lobbyPage.innerHTML = '<p style="padding:10px;">暂无大厅群组</p>';
+      return;
+    }
+
+    groups.forEach(g => {
+      const card = createGroupCard(g);
+
+      if (g.is_joined) {
+        card.onclick = () => ws.send(JSON.stringify({ type: 'enter_group', data: { group_id: g.id } }));
+      } else {
+        const joinBtn = document.createElement('button');
+        joinBtn.textContent = '加入群组';
+        joinBtn.style.marginLeft = 'auto';
+        joinBtn.style.background = '#28a745';
+        joinBtn.style.color = '#fff';
+        joinBtn.style.border = 'none';
+        joinBtn.style.padding = '6px 12px';
+        joinBtn.style.borderRadius = '4px';
+        joinBtn.style.cursor = 'pointer';
+
+        joinBtn.onclick = async (e) => {
+          e.stopPropagation(); // 防止触发 card.onclick
+          const groupCode = g.code;
+          try {
+            const res = await fetch(`${API_BASE_URL}/app/group/join`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + apiToken,
+              },
+              body: JSON.stringify({ group_code: groupCode })
+            });
+            const result = await res.json();
+            if (result.code === 0) {
+              alert('加入成功！');
+              ws.send(JSON.stringify({ type: 'enter_lobby'}));
+            } else {
+              alert('加入失败：' + (result.msg || '未知错误'));
+            }
+          } catch (err) {
+            console.error('加入群组失败', err);
+            alert('网络错误，无法加入群组');
+          }
+        };
+
+        card.appendChild(joinBtn);
+        card.onclick = () => {
+          alert('你尚未加入该群组');
+        };
+      }
+
+      lobbyPage.appendChild(card);
+    });
+  }
+
+  function createGroupCard(g) {
+    const card = document.createElement('div');
+    card.className = 'group-card';
+
+    const cover = document.createElement('img');
+    cover.className = 'group-cover';
+    cover.src = g.cover_pic_url || '';
+    card.appendChild(cover);
+
+    const info = document.createElement('div');
+    info.className = 'group-info';
+    info.innerHTML = `
+    <div class="group-title">${g.title}</div>
+    <div class="group-code">群号：${g.code}</div>
+    <div class="group-last-chat">${g.last_chat?.content ?? ''}</div>
+  `;
+    card.appendChild(info);
+
+    if (g.unread_count > 0) {
+      const unread = document.createElement('div');
+      unread.className = 'unread-badge';
+      unread.textContent = g.unread_count;
+      card.appendChild(unread);
+    }
+
+    return card;
+  }
+
+  function renderChatPage(data, showInput = true) {
+    showPage('chat-page');
+    chatPage.dataset.sysGroup = (!showInput).toString();
+    document.getElementById('chat-input').style.display = showInput ? 'flex' : 'none';
+
+    chatMessages.innerHTML = '';
+    data.chat_list.forEach(appendChatMessage);
+
+    // 自动上报最新已读：只找最大 chat_id（修正：只发一次）
+    if (Array.isArray(data.chat_list) && data.chat_list.length > 0 && currentGroupId > 0) {
+      let maxChatId = 0;
+      for (const msg of data.chat_list) {
+        if (msg.id > maxChatId) maxChatId = msg.id;
+      }
+      updateLastRead(currentGroupId, maxChatId);
+    }
+  }
+
+  function appendChatMessage(msg) {
+    const line = document.createElement('div');
+    line.style.marginBottom = '10px';
+    line.innerHTML = `
+    <img src="${msg.user.avatar_url}" style="width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:6px;">
+    <span style="font-weight:bold;">${msg.user.name}</span>
+    <span style="font-size:12px;color:#aaa;"> [${msg.user.title}]</span>
+    <div style="margin-left:36px;">[${msg.datetime.text} ${msg.datetime.time}] ${msg.content}</div>
+  `;
+    chatMessages.appendChild(line);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // 移除重复 updateLastRead 调用
+  }
+
+  chatSendBtn.onclick = () => {
+    const content = chatInput.value.trim();
+    if (!content) return;
+    ws.send(JSON.stringify({ type: 'send_chat', data: { content } }));
+  };
+
+  document.getElementById('chat-back-btn').onclick = () => {
+    ws.send(JSON.stringify({ type: 'enter_my_group' }));
+    showPage('group-list');
+  };
+
+  connectWS();
+</script>
+</body>
+</html>

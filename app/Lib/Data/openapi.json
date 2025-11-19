@@ -1,0 +1,2829 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Cp Chat",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/API_HOST/app/group/join": {
+      "post": {
+        "summary": "申请加群",
+        "deprecated": false,
+        "description": "用户在聊天列表以群号加群或在大厅申请加群",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer ",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_code": {
+                    "type": "string",
+                    "description": "群号"
+                  }
+                },
+                "required": [
+                  "group_code"
+                ]
+              },
+              "example": {
+                "group_code": "88776"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "description": "讯息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "group_id": {
+                          "type": "integer",
+                          "description": "加入的群ID"
+                        }
+                      },
+                      "required": [
+                        "group_id"
+                      ],
+                      "description": "回传数据"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data",
+                    "01K30C8K9NBYQ5T4TKDCBK75JM"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "msg": "加入成功",
+                      "data": {
+                        "group_id": 2
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "Group Not Found",
+                    "value": {
+                      "code": 127,
+                      "msg": "未找到该群组"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/quit": {
+      "post": {
+        "summary": "申请退群",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666780b0300d51db9d948b2b3d0c8d534e11754294467041",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_code": {
+                    "type": "string",
+                    "description": "群号"
+                  }
+                },
+                "required": [
+                  "group_code"
+                ]
+              },
+              "example": {
+                "group_code": "544222"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "msg": "ok"
+                    }
+                  },
+                  "2": {
+                    "summary": "群组不存在",
+                    "value": {
+                      "code": 127,
+                      "msg": "未找到该群组"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/pin": {
+      "post": {
+        "summary": "群置顶",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666ebf06c9552aaa552f552839d2d1313521755573086706",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_id": {
+                    "type": "integer",
+                    "description": "群ID"
+                  }
+                },
+                "required": [
+                  "group_id"
+                ]
+              },
+              "example": {
+                "group_id": 2
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "置顶成功"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/unpin": {
+      "post": {
+        "summary": "取消群置顶",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B6667742dd34f8f0c6340013ec95d3a7ed831755572676191",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_id": {
+                    "type": "integer",
+                    "description": "群ID"
+                  }
+                },
+                "required": [
+                  "group_id"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "取消置顶成功"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/info": {
+      "get": {
+        "summary": "群信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B6667742dd34f8f0c6340013ec95d3a7ed831755572676191",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_id": {
+                    "type": "integer",
+                    "description": "群ID"
+                  }
+                },
+                "required": [
+                  "group_id"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "group_id": {
+                          "type": "integer",
+                          "description": "群ID"
+                        },
+                        "code": {
+                          "type": "string",
+                          "description": "群号"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "群名称"
+                        },
+                        "bulletin": {
+                          "type": "string",
+                          "description": "群公告"
+                        },
+                        "user_count" : {
+                          "type" : "integer",
+                          "description": "群人数"
+                        }
+                      },
+                      "required": [
+                        "group_id",
+                        "code",
+                        "title",
+                        "bulletin",
+                        "user_count"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "group_id": 1,
+                    "code": "000001",
+                    "title": "第一间",
+                    "bulletin": "群公告",
+                    "user_count" : 21
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/user/avatar": {
+      "get": {
+        "summary": "取用户头像清单",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666702ed9610feed76d286aad7a5e2d1b171755571972614",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "头像ID"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "头像URL"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "url"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": [
+                    {
+                      "id": 1,
+                      "url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                    },
+                    {
+                      "id": 2,
+                      "url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/e295253a7b173901--500x500--.png"
+                    },
+                    {
+                      "id": 3,
+                      "url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/d8fa5469172efca2--500x500--.png"
+                    },
+                    {
+                      "id": 4,
+                      "url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/c3e087934c9e50f3--500x500--.png"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "设置头像",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002dd552f3e342927e917b8a16b686dc3b4",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "头像ID"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              },
+              "example": {
+                "id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "头像ID"
+                        },
+                        "avatar_url": {
+                          "type": "string",
+                          "description": "头像URL"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "avatar_url"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "id": 1,
+                    "pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/clean": {
+      "post": {
+        "summary": "清空群对话",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 00249f268d9d9c45542ad45a3ad310221ae",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "group_id"
+                ]
+              },
+              "example": {
+                "group_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "操作成功"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/update": {
+      "post": {
+        "summary": "管理者修改群信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 0028717bb0cdc1635903effdc899d99b029",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "group_id": {
+                    "type": "integer",
+                    "description": "群ID"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "群标题, 不修改的话不要送这栏或给null"
+                  },
+                  "bulletin": {
+                    "type": "string",
+                    "description": "群公告, 不修改的话不要送这栏或给null"
+                  }
+                },
+                "required": [
+                  "group_id",
+                  "title",
+                  "bulletin"
+                ]
+              },
+              "example": {
+                "group_id": 1,
+                "title": "修改群标题-初始群修改群标题",
+                "bulletin": "公告V2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "更新后标题"
+                        },
+                        "bulletin": {
+                          "type": "string",
+                          "description": "更新后公告"
+                        }
+                      },
+                      "required": [
+                        "title",
+                        "bulletin"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "title": "betman99群",
+                    "bulletin": "公告V2"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/bonus/create-lucky-money": {
+      "post": {
+        "summary": "创建红包",
+        "deprecated": false,
+        "description": "提交创建红包行为, 若提交成功后端会向群内推一笔红包讯息, 需注意:呼叫红包API时用户必须在群内",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666d1824c5ec946943f3d34647608260d001755234614049",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "红包标题, 群管理才可直接填标题"
+                  },
+                  "title_id": {
+                    "type": "integer",
+                    "description": "一般用户选红包标题, 标题来源在create-lucky-money-info那支"
+                  },
+                  "amount_type": {
+                    "type": "integer",
+                    "description": "金额类型 1:普通红包 2:手气红包"
+                  },
+                  "count": {
+                    "type": "integer",
+                    "description": "红包总数量"
+                  },
+                  "unit_amount": {
+                    "type": "string",
+                    "description": "每包固定金额, 最低1元(amount_type=1时提供)"
+                  },
+                  "total_amount": {
+                    "type": "string",
+                    "description": "红包总金额, 最低1元(amount_type=2时提供)"
+                  },
+                  "bonus_type": {
+                    "type": "integer",
+                    "description": "奖励类型 1:一般奖金红包 2:游戏彩金红包, 一般用户只能开一般奖金红包"
+                  },
+                  "require_multi": {
+                    "type": "string",
+                    "description": "打码倍数, 一般用户开红包不用填, 固定1倍"
+                  },
+                  "game_company_id": {
+                    "type": "integer",
+                    "description": "游戏彩金红包的厂商ID, 一般奖金的不用填, menu在create-lucky-money-info会给"
+                  }
+                },
+                "required": [
+                  "title",
+                  "amount_type",
+                  "count",
+                  "unit_amount",
+                  "bonus_type",
+                  "require_multi",
+                  "game_company_id",
+                  "total_amount",
+                  "title_id"
+                ]
+              },
+              "example": {
+                "title": "恭喜发财",
+                "amount_type": 1,
+                "count": 500,
+                "unit_amount": 10,
+                "bonus_type": 1,
+                "require_multi": 1,
+                "game_company_id": 26,
+                "title_id": 1,
+                "total_amount": 50000
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "紅包創建成功"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/bonus/grab-lucky-money": {
+      "post": {
+        "summary": "抢红包",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666d1824c5ec946943f3d34647608260d001755234614049",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lm_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "lm_id"
+                ]
+              },
+              "example": {
+                "lm_id": 6
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "147为已领取"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "creator_name": {
+                          "type": "string",
+                          "description": "显示创建者名称"
+                        },
+                        "avatar_url": {
+                          "type": "string",
+                          "description": "创建者头像url"
+                        },
+                        "detail_viewable": {
+                          "type": "integer",
+                          "description": "bool as int, 0或1, 当前用户是否可查看详情"
+                        },
+                        "congrats": {
+                          "type": "string",
+                          "description": "祝福语 eg. 恭喜获得"
+                        },
+                        "bonus": {
+                          "type": "string",
+                          "description": "显示金额字样 eg. 1000 元"
+                        }
+                      },
+                      "required": [
+                        "creator_name",
+                        "avatar_url",
+                        "detail_viewable",
+                        "congrats",
+                        "bonus"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success",
+                    "value": {
+                      "code": 0,
+                      "msg": "领取成功",
+                      "data": {
+                        "creator_name": "****an99",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png",
+                        "detail_viewable": 1,
+                        "congrats": "恭喜获得",
+                        "bonus": "1000 元"
+                      }
+                    }
+                  },
+                  "2": {
+                    "summary": "已领取",
+                    "value": {
+                      "code": 147,
+                      "msg": "红包已領取",
+                      "data": {
+                        "creator_name": "****an99",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png",
+                        "detail_viewable": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/bonus/lucky-money-record": {
+      "get": {
+        "summary": "红包领取详情",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "lm_id",
+            "in": "query",
+            "description": "红包ID, 取自群内消息的extra部分",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666d631deaeaf8d7525df3ebd8ae2307d091754303810571",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "examples": {
+                "1": {
+                  "value": {}
+                },
+                "2": {
+                  "value": {
+                    "code": 0,
+                    "msg": "ok",
+                    "data": {
+                      "creator": {
+                        "name": "****an99",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "lm": {
+                        "amount_type": 1,
+                        "title": "恭喜发财-0815returnquotav2",
+                        "remain_state_text": "剩余 1000.000 元",
+                        "require_text": "平台打码：打码 1 倍后可提现",
+                        "remain_pack_text": "已领取 1 / 3 个",
+                        "remain_amount_text": "共 1000 / 3000 元",
+                        "record": [
+                          {
+                            "create_time": 1755583380,
+                            "create_time_str": "2025-08-19 14:03:00",
+                            "username": "****an99",
+                            "bonus": "1000元"
+                          }
+                        ]
+                      }
+                    },
+                    "pagination": {
+                      "total": 1,
+                      "page": 1,
+                      "page_size": 50,
+                      "total_pages": 1
+                    }
+                  },
+                  "summary": "success"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "creator": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "description": "显示创建者名称"
+                            },
+                            "avatar_url": {
+                              "type": "string",
+                              "description": "创建者头像URL"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "avatar_url"
+                          ],
+                          "description": "创建者资讯"
+                        },
+                        "lm": {
+                          "type": "object",
+                          "properties": {
+                            "amount_type": {
+                              "type": "integer",
+                              "description": "金额类型 1:普通红包 2:拼手气红包"
+                            },
+                            "title": {
+                              "type": "string",
+                              "description": "红包标题"
+                            },
+                            "remain_state_text": {
+                              "type": "string",
+                              "description": "红包剩余状态eg. 剩余 1000.000 元 or 红包已被抢光"
+                            },
+                            "require_text": {
+                              "type": "string",
+                              "description": "打码要求字样 eg. 游戏打码：打码 1 倍后可提现 or 平台打码：打码 0.5 倍后可提现"
+                            },
+                            "remain_pack_text": {
+                              "type": "string",
+                              "description": "剩余包数字样 eg. 已领取 1 / 3 个"
+                            },
+                            "remain_amount_text": {
+                              "type": "string",
+                              "description": "剩余金额字样 eg. 共 1000 / 3000 元"
+                            },
+                            "record": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "create_time": {
+                                    "type": "integer",
+                                    "description": "领取时间 unixtimestamp"
+                                  },
+                                  "create_time_str": {
+                                    "type": "string",
+                                    "description": "领取时间 字串"
+                                  },
+                                  "username": {
+                                    "type": "string",
+                                    "description": "显示用户名"
+                                  },
+                                  "bonus": {
+                                    "type": "string",
+                                    "description": "显示金额字串 eg. 1000元"
+                                  }
+                                }
+                              },
+                              "description": " 领取纪录"
+                            }
+                          },
+                          "required": [
+                            "amount_type",
+                            "title",
+                            "remain_state_text",
+                            "require_text",
+                            "remain_pack_text",
+                            "remain_amount_text",
+                            "record"
+                          ],
+                          "description": "红包资讯"
+                        }
+                      },
+                      "required": [
+                        "creator",
+                        "lm"
+                      ]
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "page": {
+                          "type": "integer"
+                        },
+                        "page_size": {
+                          "type": "integer"
+                        },
+                        "total_pages": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "page",
+                        "page_size",
+                        "total_pages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data",
+                    "pagination"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "creator": {
+                      "name": "****an99",
+                      "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                    },
+                    "lm": {
+                      "amount_type": 1,
+                      "title": "恭喜发财-0815returnquotav2",
+                      "remain_state_text": "剩余 1000.000 元",
+                      "require_text": "平台打码：打码 1 倍后可提现",
+                      "remain_pack_text": "已领取 1 / 3 个",
+                      "remain_amount_text": "共 1000 / 3000 元",
+                      "record": [
+                        {
+                          "create_time": 1755583380,
+                          "create_time_str": "2025-08-19 14:03:00",
+                          "username": "****an99",
+                          "bonus": "1000元"
+                        }
+                      ]
+                    }
+                  },
+                  "pagination": {
+                    "total": 1,
+                    "page": 1,
+                    "page_size": 50,
+                    "total_pages": 1
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/bonus/close-lucky-money": {
+      "post": {
+        "summary": "收回紅包",
+        "deprecated": false,
+        "description": "红包创建者在群内收回红包",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666d1824c5ec946943f3d34647608260d001755234614049",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lm_id": {
+                    "type": "integer",
+                    "description": "红包ID"
+                  }
+                },
+                "required": [
+                  "lm_id"
+                ]
+              },
+              "example": {
+                "lm_id": 6
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "成功收回"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/bonus/lucky-money-info": {
+      "get": {
+        "summary": "紅包資訊頁",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "lm_id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": 51,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666ccad63564e612134608c7043cd108d8a1754547962481",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lm_id": {
+                    "type": "integer",
+                    "description": "红包ID"
+                  }
+                },
+                "required": [
+                  "lm_id"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "creator": {
+                          "type": "object",
+                          "properties": {
+                            "creator_name": {
+                              "type": "string",
+                              "description": "创建者名称"
+                            },
+                            "avatar_url": {
+                              "type": "string",
+                              "description": "创建者头像"
+                            },
+                            "detail_viewable": {
+                              "type": "integer",
+                              "description": "当前用户可查看详情, 系统红包不开放查看"
+                            }
+                          },
+                          "required": [
+                            "creator_name",
+                            "avatar_url",
+                            "detail_viewable"
+                          ]
+                        },
+                        "lm": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "description": "红包ID"
+                            },
+                            "title": {
+                              "type": "string",
+                              "description": "红包名称"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "title"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "creator",
+                        "lm"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "creator": {
+                      "creator_name": "系统",
+                      "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/chat/default/avatar/s01.png",
+                      "detail_viewable": 0
+                    },
+                    "lm": {
+                      "id": 51,
+                      "title": "本地系统包"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/bonus/create-lucky-money-info": {
+      "get": {
+        "summary": "红包创建页资讯",
+        "deprecated": false,
+        "description": "用户发送红包时设定页面的表单资料",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B666ebf06c9552aaa552f552839d2d1313521755573086706",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "amount_type_menu": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "val": {
+                                "type": "integer",
+                                "description": "类型值 eg. 2"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "类型名称 eg. 拼手气红包"
+                              }
+                            },
+                            "required": [
+                              "val",
+                              "name"
+                            ]
+                          },
+                          "description": "金额类型选单项"
+                        },
+                        "page_title": {
+                          "type": "string",
+                          "description": "页面标题 eg. 群管理发红包"
+                        },
+                        "online_user_count": {
+                          "type": "string",
+                          "description": "群内在线用户字样 eg. 在线人数： 5"
+                        },
+                        "is_admin": {
+                          "type": "integer",
+                          "description": "bool as int, 0 or 1, 当前用户是否为群管理"
+                        },
+                        "title_menu": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "红包标题选单, 当发红包只是普通用户时, 标题只能用选的, 反之如果是群管理则可以自由输入"
+                        },
+                        "bonus_type_menu": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "val": {
+                                "type": "integer",
+                                "description": "类型值 eg. 2"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "类型名称 eg. 平台彩金 or 游戏专属"
+                              }
+                            },
+                            "required": [
+                              "val",
+                              "name"
+                            ]
+                          },
+                          "description": "奖励类型选单项, 一般用户不能发游戏彩金, 群管理理者皆可"
+                        },
+                        "quota": {
+                          "type": "object",
+                          "properties": {
+                            "bonus_1": {
+                              "type": "string",
+                              "description": "平台彩金额度 eg. 剩余额度：999994000元"
+                            },
+                            "bonus_2": {
+                              "type": "string",
+                              "description": "游戏专属额度 eg. 剩余额度：4971000元"
+                            }
+                          },
+                          "required": [
+                            "bonus_1",
+                            "bonus_2"
+                          ],
+                          "description": "用户发红包可用额度或余额(用户是余额, 群管理是群额度, is_admin=0时只会给bonus_1)"
+                        },
+                        "require_text": {
+                          "type": "string",
+                          "description": "打码说明: eg. 说明：0倍则不要求，最小支持小数点后1位，例如0.1倍"
+                        },
+                        "game_company_menu": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "厂商ID"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "厂商名称 eg. 开心棋牌"
+                              }
+                            }
+                          },
+                          "description": "游戏专属红包的厂商选单"
+                        },
+                        "remain_require_text": {
+                          "type": "string",
+                          "description": "普通用户余额与剩余打码额(is_admin=1时不用显示这个)"
+                        }
+                      },
+                      "required": [
+                        "amount_type_menu",
+                        "page_title",
+                        "online_user_count",
+                        "is_admin",
+                        "title_menu",
+                        "bonus_type_menu",
+                        "quota",
+                        "require_text",
+                        "game_company_menu",
+                        "remain_require_text"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "amount_type_menu": [
+                      {
+                        "val": 1,
+                        "name": "普通红包"
+                      },
+                      {
+                        "val": 2,
+                        "name": "拼手气红包"
+                      }
+                    ],
+                    "page_title": "群管理发红包",
+                    "online_user_count": "在线人数： 1",
+                    "is_admin": 1,
+                    "title_menu": [],
+                    "bonus_type_menu": [
+                      {
+                        "val": 1,
+                        "name": "平台彩金"
+                      },
+                      {
+                        "val": 2,
+                        "name": "游戏专属"
+                      }
+                    ],
+                    "quota": {
+                      "bonus_1": "剩余额度：999994000元",
+                      "bonus_2": "剩余额度：4971000元"
+                    },
+                    "require_text": "说明：0倍则不要求，最小支持小数点后1位，例如0.1倍",
+                    "game_company_menu": [
+                      {
+                        "id": 21,
+                        "name": "开心棋牌"
+                      }
+                    ],
+                    "remain_require_text": ""
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/chat/history": {
+      "get": {
+        "summary": "拉取群聊歷史訊息",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "before_chat_id",
+            "in": "query",
+            "description": "起始訊息ID, 拿取當前顯示訊息中最小的ID, 會返回這個ID以前{count}筆訊息",
+            "required": true,
+            "example": "136",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "拉取筆數, 選填, 預設20筆, 上限100筆",
+            "required": true,
+            "example": "20",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "Bearer 002B66695B0C5be37e93D2Ba463479B1F243D2D1756434757103",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "integer",
+                            "description": "消息類型 0:一般 1:紅包"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "description": "消息ID"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "用戶ID"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "顯示名稱"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "頭銜"
+                              },
+                              "avatar_url": {
+                                "type": "string",
+                                "description": "頭像網址"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "title",
+                              "avatar_url"
+                            ],
+                            "description": "發言用戶數據"
+                          },
+                          "content": {
+                            "type": "string",
+                            "description": "發言內容"
+                          },
+                          "datetime": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string",
+                                "description": "日期"
+                              },
+                              "time": {
+                                "type": "string",
+                                "description": "時間"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "time"
+                            ],
+                            "description": "發言時間日期"
+                          },
+                          "extra": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "description": "type=1時帶有的紅包訊息"
+                            }
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id",
+                          "user",
+                          "content",
+                          "datetime",
+                          "extra"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": [
+                    {
+                      "type": 0,
+                      "id": 126,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "egegeg",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 127,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "egegeeg",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 128,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "egege",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 129,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "egegeg",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 130,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "egege",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 131,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "aaaa",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 132,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "1",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 133,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "2",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 134,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "3",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    },
+                    {
+                      "type": 0,
+                      "id": 135,
+                      "user": {
+                        "id": 6,
+                        "name": "****an99",
+                        "title": "Lv28",
+                        "avatar_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250709/dad5c0475ac17ac5--640x640--.png"
+                      },
+                      "content": "4",
+                      "datetime": {
+                        "date": "08-29",
+                        "time": "10:24"
+                      },
+                      "extra": []
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/my": {
+      "get": {
+        "summary": "取聊天列表",
+        "deprecated": false,
+        "description": "取聊天列表的群列表",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页次",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "每页笔数",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "description": "讯息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "my_group": {
+                          "type": "object",
+                          "properties": {
+                            "groups": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "integer",
+                                    "description": "群ID"
+                                  },
+                                  "unread_count": {
+                                    "type": "integer",
+                                    "description": "群未读数"
+                                  },
+                                  "code": {
+                                    "type": "string",
+                                    "description": "群号"
+                                  },
+                                  "title": {
+                                    "type": "string",
+                                    "description": "群名称"
+                                  },
+                                  "cover_pic_url": {
+                                    "type": "string",
+                                    "description": "群封面"
+                                  },
+                                  "last_chat": {
+                                    "type": "object",
+                                    "properties": {
+                                      "content": {
+                                        "type": "string",
+                                        "description": "内容"
+                                      },
+                                      "time": {
+                                        "type": "string",
+                                        "description": "日期时间 eg. 09-01 16:44"
+                                      }
+                                    },
+                                    "required": [
+                                      "content",
+                                      "time"
+                                    ],
+                                    "description": "最新一笔讯息"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "unread_count",
+                                  "code",
+                                  "title",
+                                  "cover_pic_url",
+                                  "last_chat"
+                                ]
+                              },
+                              "description": "群组list"
+                            },
+                            "pagination": {
+                              "type": "object",
+                              "properties": {
+                                "total": {
+                                  "type": "integer"
+                                },
+                                "page": {
+                                  "type": "integer"
+                                },
+                                "page_size": {
+                                  "type": "integer"
+                                },
+                                "total_pages": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "total",
+                                "page",
+                                "page_size",
+                                "total_pages"
+                              ],
+                              "description": "分页"
+                            }
+                          },
+                          "required": [
+                            "groups",
+                            "pagination"
+                          ],
+                          "description": "聊天列表数据"
+                        },
+                        "sys_group": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "description": "系统群标题 eg.系统消息"
+                            },
+                            "cover_pic_url": {
+                              "type": "string",
+                              "description": "系统群封面"
+                            },
+                            "unread_count": {
+                              "type": "integer",
+                              "description": "喜统群未读数"
+                            },
+                            "last_chat": {
+                              "type": "object",
+                              "properties": {
+                                "content": {
+                                  "type": "string",
+                                  "description": "内容"
+                                },
+                                "time": {
+                                  "type": "string",
+                                  "description": "时间"
+                                },
+                                "create_time": {
+                                  "type": "integer",
+                                  "description": "unix timestamp"
+                                }
+                              },
+                              "required": [
+                                "content",
+                                "time",
+                                "create_time"
+                              ],
+                              "description": "最新一笔讯息"
+                            }
+                          },
+                          "required": [
+                            "title",
+                            "cover_pic_url",
+                            "unread_count",
+                            "last_chat"
+                          ],
+                          "description": "系统群"
+                        }
+                      },
+                      "required": [
+                        "my_group",
+                        "sys_group"
+                      ],
+                      "description": "数据"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "my_group": {
+                      "groups": [
+                        {
+                          "id": 20,
+                          "unread_count": 0,
+                          "code": "8825252",
+                          "title": "群ABC",
+                          "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250708/5d3ed67b72e0a93b--1024x1024--.jpg",
+                          "last_chat": {
+                            "content": "恭喜发财-0901",
+                            "create_time": 1756716260,
+                            "create_time_str": "2025-09-01 16:44:20"
+                          }
+                        },
+                        {
+                          "id": 21,
+                          "unread_count": 0,
+                          "code": "76333093",
+                          "title": "winnie的群",
+                          "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250708/5d3ed67b72e0a93b--1024x1024--.jpg",
+                          "last_chat": {}
+                        }
+                      ],
+                      "pagination": {
+                        "total": 2,
+                        "page": 1,
+                        "page_size": 20,
+                        "total_pages": 1
+                      }
+                    },
+                    "sys_group": {
+                      "title": "系统消息",
+                      "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/chat/default/sys_group/default_cover.png",
+                      "unread_count": 7,
+                      "last_chat": {
+                        "content": "PPALL",
+                        "time": "09-02 15:44",
+                        "create_time" : 1756799074
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/group/lobby": {
+      "get": {
+        "summary": "取大厅群列表",
+        "deprecated": false,
+        "description": "获取大厅群列表数据",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页次",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "每页笔数",
+            "required": false,
+            "example": 2000,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码"
+                    },
+                    "msg": {
+                      "type": "string",
+                      "description": "讯息"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "groups": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "群ID"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "群名称"
+                              },
+                              "code": {
+                                "type": "string",
+                                "description": "群号"
+                              },
+                              "join_user_level": {
+                                "type": "integer",
+                                "description": "可加入用户等级"
+                              },
+                              "cover_pic_url": {
+                                "type": "string",
+                                "description": "群封面(大厅封面)"
+                              },
+                              "is_joined": {
+                                "type": "integer",
+                                "description": "用户已加入 0:否 1:是"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "title",
+                              "code",
+                              "join_user_level",
+                              "cover_pic_url",
+                              "is_joined"
+                            ]
+                          },
+                          "description": "大厅群列表"
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "total": {
+                              "type": "integer",
+                              "description": "总笔数"
+                            },
+                            "page": {
+                              "type": "integer",
+                              "description": "页次"
+                            },
+                            "page_size": {
+                              "type": "integer",
+                              "description": "每页笔数"
+                            },
+                            "total_pages": {
+                              "type": "integer",
+                              "description": "总页数"
+                            }
+                          },
+                          "required": [
+                            "total",
+                            "page",
+                            "page_size",
+                            "total_pages"
+                          ],
+                          "description": "分页"
+                        }
+                      },
+                      "required": [
+                        "groups",
+                        "pagination"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": {
+                    "groups": [
+                      {
+                        "id": 2,
+                        "title": "0804-1",
+                        "code": "54321",
+                        "join_user_level": 5,
+                        "lobby_cover_pic_url": "/uploads/chat/B666/g_cover/40365b6ee161e2ec--400x400--.png",
+                        "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/chat/B666/g_cover/40365b6ee161e2ec--400x400--.png",
+                        "is_joined": 0
+                      },
+                      {
+                        "id": 5,
+                        "title": "0804-4",
+                        "code": "77667",
+                        "join_user_level": 5,
+                        "lobby_cover_pic_url": "/uploads/chat/B666/g_cover/40365b6ee161e2ec--400x400--.png",
+                        "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/chat/B666/g_cover/40365b6ee161e2ec--400x400--.png",
+                        "is_joined": 0
+                      },
+                      {
+                        "id": 20,
+                        "title": "群ABC",
+                        "code": "8825252",
+                        "join_user_level": 5,
+                        "lobby_cover_pic_url": "/uploads/image/20250708/5d3ed67b72e0a93b--1024x1024--.jpg",
+                        "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250708/5d3ed67b72e0a93b--1024x1024--.jpg",
+                        "is_joined": 1
+                      },
+                      {
+                        "id": 21,
+                        "title": "winnie的群",
+                        "code": "76333093",
+                        "join_user_level": 5,
+                        "lobby_cover_pic_url": "/uploads/image/20250708/5d3ed67b72e0a93b--1024x1024--.jpg",
+                        "cover_pic_url": "https://d1zhhyloqq8jns.cloudfront.net/uploads/image/20250708/5d3ed67b72e0a93b--1024x1024--.jpg",
+                        "is_joined": 1
+                      }
+                    ],
+                    "pagination": {
+                      "total": 4,
+                      "page": 1,
+                      "page_size": 20,
+                      "total_pages": 1
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/API_HOST/app/user/lucky-money-record": {
+      "get": {
+        "summary": "获取用户个人红包明细",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页次",
+            "required": false,
+            "example": 1,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "每页笔数",
+            "required": false,
+            "example": 50,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "scene_type",
+            "in": "query",
+            "description": "红包来源, 0:全部 1:群红包 2:系统红包",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "Bearer 002B6663da3A09C33d42DEE13a29bE00CAbF8b91757388517941",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "record": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "lm_id": {
+                                "type": "integer",
+                                "description": "红包ID"
+                              },
+                              "record_id": {
+                                "type": "integer",
+                                "description": "明细ID"
+                              },
+                              "lm_title": {
+                                "type": "string",
+                                "description": "红包名称"
+                              },
+                              "create_time": {
+                                "type": "string",
+                                "description": "红包领取时间"
+                              },
+                              "amount": {
+                                "type": "string",
+                                "description": "红包金额"
+                              },
+                              "scene_name": {
+                                "type": "string",
+                                "description": "来源名称"
+                              },
+                              "group_title": {
+                                "type": "string",
+                                "description": "群名称"
+                              },
+                              "require_type_name": {
+                                "type": "string",
+                                "description": "打码类型名称"
+                              },
+                              "require_multi": {
+                                "type": "string",
+                                "description": "打码倍数"
+                              },
+                              "game_company": {
+                                "type": "string",
+                                "description": "游戏厂商名称"
+                              }
+                            },
+                            "required": [
+                              "lm_id",
+                              "record_id",
+                              "lm_title",
+                              "create_time",
+                              "amount",
+                              "scene_name",
+                              "group_title",
+                              "require_type_name",
+                              "require_multi",
+                              "game_company"
+                            ]
+                          },
+                          "description": "红包纪录明细"
+                        }
+                      },
+                      "required": [
+                        "record"
+                      ]
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "description": "总笔数"
+                        },
+                        "page": {
+                          "type": "integer",
+                          "description": "当前页次"
+                        },
+                        "page_size": {
+                          "type": "integer",
+                          "description": "每页笔数"
+                        },
+                        "total_pages": {
+                          "type": "integer",
+                          "description": "总页数"
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "page",
+                        "page_size",
+                        "total_pages"
+                      ],
+                      "description": "分页"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "msg",
+                    "data",
+                    "pagination"
+                  ]
+                },
+                "example": {
+                  "code": 0,
+                  "msg": "ok",
+                  "data": [
+                    {
+                      "lm_id": 23,
+                      "record_id": 30,
+                      "lm_title": "系统包",
+                      "create_time": "2025-09-05 16:47:46",
+                      "amount": "10.000",
+                      "scene_name": "系统红包",
+                      "group_title": "",
+                      "require_type_name": "游戏专属打码",
+                      "require_multi": "1.0",
+                      "game_company": "PG电子"
+                    },
+                    {
+                      "lm_id": 22,
+                      "record_id": 29,
+                      "lm_title": "用户开红包-betman99-cron_settle3",
+                      "create_time": "2025-09-05 16:39:18",
+                      "amount": "10.000",
+                      "scene_name": "群红包",
+                      "group_title": "winnie的群",
+                      "require_type_name": "平台打码",
+                      "require_multi": "1.0",
+                      "game_company": ""
+                    },
+                    {
+                      "lm_id": 6,
+                      "record_id": 22,
+                      "lm_title": "0904-game26",
+                      "create_time": "2025-09-04 16:06:08",
+                      "amount": "50.000",
+                      "scene_name": "群红包",
+                      "group_title": "PPVV",
+                      "require_type_name": "游戏专属打码",
+                      "require_multi": "1.0",
+                      "game_company": "PG电子"
+                    }
+                  ],
+                  "pagination": {
+                    "total": 32,
+                    "page": 1,
+                    "page_size": 20,
+                    "total_pages": 2
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["code", "msg"],
+        "properties": {
+          "code": { "type": "integer", "description": "业务错误码" },
+          "msg": { "type": "string", "description": "错误说明" }
+        }
+      },
+      "ErrorCodeList": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Error" },
+        "example": [
+          { "code": 0, "msg": "没有错误" },
+          { "code": 2, "msg": "请求数据不存在" },
+          { "code": 100, "msg": "未定义错误" },
+          { "code": 101, "msg": "MsgType未匹配或MsgPayload格式错误." },
+          { "code": 103, "msg": "登入处理失败." },
+          { "code": 104, "msg": "找不到该有的session, 断定用户已离线." },
+          { "code": 105, "msg": "查无此聊天消息." },
+          { "code": 106, "msg": "进群失败." },
+          { "code": 107, "msg": "讯息发送失败." },
+          { "code": 108, "msg": "用户不属于该群组." },
+          { "code": 109, "msg": "用户等级不可发言." },
+          { "code": 110, "msg": "非法场景操作, eg. 发起需在群内操作的行为时但操作人却不在群内, 例如置顶(会检查redis group online user)" },
+          { "code": 111, "msg": "用户已禁言" },
+          { "code": 112, "msg": "用户重复登入, 踢掉前一个连线前通知用" },
+          { "code": 114, "msg": "非法操作, 例如只有管理员才能pin讯息" },
+          { "code": 115, "msg": "置顶消息失败" },
+          { "code": 116, "msg": "用户被全域禁言." },
+          { "code": 118, "msg": "参数格式不合法." },
+          { "code": 119, "msg": "讯息删除失败." },
+          { "code": 120, "msg": "禁言失败." },
+          { "code": 121, "msg": "解禁失败." },
+          { "code": 122, "msg": "踢群失败." },
+          { "code": 123, "msg": "管理者登入失败" },
+          { "code": 124, "msg": "离开群组失败." },
+          { "code": 126, "msg": "不合法的API Token" },
+          { "code": 127, "msg": "未找到该群组." },
+          { "code": 128, "msg": "用户已加入该群组" },
+          { "code": 129, "msg": "群组已满员." },
+          { "code": 130, "msg": "群组未开放主动加入." },
+          { "code": 131, "msg": "加群用户资格不符." },
+          { "code": 132, "msg": "redis lock 锁定中" },
+          { "code": 133, "msg": "撤销置顶消息失败" },
+          { "code": 134, "msg": "创建红包失败." },
+          { "code": 135, "msg": "群组当前红包额度不足" },
+          { "code": 136, "msg": "紅包活動未開啟." },
+          { "code": 137, "msg": "更新最后已读失败." },
+          { "code": 139, "msg": "进入系统群失败." },
+          { "code": 140, "msg": "进入聊天列表失败." },
+          { "code": 141, "msg": "进入我的信息失败." },
+          { "code": 142, "msg": "获取历史消息失败." },
+          { "code": 143, "msg": "更新系统消息已读失败." },
+          { "code": 144, "msg": "彩票用户尚有打码, 导致红包创建失败" },
+          { "code": 145, "msg": "搶紅包 - 紅包不存在." },
+          { "code": 146, "msg": "搶紅包 - 紅包已過期" },
+          { "code": 147, "msg": "搶紅包 - 不明原因領取失敗." },
+          { "code": 148, "msg": "断线重连Token非法或已超时" },
+          { "code": 149, "msg": "断线重连失败." },
+          { "code": 150, "msg": "群置顶失败" },
+          { "code": 151, "msg": "取消群置顶失败" },
+          { "code": 152, "msg": "重复登入" },
+          { "code": 153, "msg": "申请加入群组失败" },
+          { "code": 154, "msg": "申请退出群组失败" },
+          { "code": 155, "msg": "取我的聊天群失败" },
+          { "code": 156, "msg": "取大厅群失败" },
+          { "code": 157, "msg": "进入大厅失败" }
+        ]
+      }
+    },
+    "securitySchemes": {},
+    "x-error-codes": [
+      { "code": 0, "msg": "没有错误" },
+      { "code": 2, "msg": "请求数据不存在" },
+      { "code": 100, "msg": "未定义错误" },
+      { "code": 101, "msg": "MsgType未匹配或MsgPayload格式错误." },
+      { "code": 103, "msg": "登入处理失败." },
+      { "code": 104, "msg": "找不到该有的session, 断定用户已离线." },
+      { "code": 105, "msg": "查无此聊天消息." },
+      { "code": 106, "msg": "进群失败." },
+      { "code": 107, "msg": "讯息发送失败." },
+      { "code": 108, "msg": "用户不属于该群组." },
+      { "code": 109, "msg": "用户等级不可发言." },
+      { "code": 110, "msg": "非法场景操作, eg. 发起需在群内操作的行为时但操作人却不在群内, 例如置顶(会检查redis group online user)" },
+      { "code": 111, "msg": "用户已禁言" },
+      { "code": 112, "msg": "用户重复登入, 踢掉前一个连线前通知用" },
+      { "code": 114, "msg": "非法操作, 例如只有管理员才能pin讯息" },
+      { "code": 115, "msg": "置顶消息失败" },
+      { "code": 116, "msg": "用户被全域禁言." },
+      { "code": 118, "msg": "参数格式不合法." },
+      { "code": 119, "msg": "讯息删除失败." },
+      { "code": 120, "msg": "禁言失败." },
+      { "code": 121, "msg": "解禁失败." },
+      { "code": 122, "msg": "踢群失败." },
+      { "code": 123, "msg": "管理者登入失败" },
+      { "code": 124, "msg": "离开群组失败." },
+      { "code": 126, "msg": "不合法的API Token" },
+      { "code": 127, "msg": "未找到该群组." },
+      { "code": 128, "msg": "用户已加入该群组" },
+      { "code": 129, "msg": "群组已满员." },
+      { "code": 130, "msg": "群组未开放主动加入." },
+      { "code": 131, "msg": "加群用户资格不符." },
+      { "code": 132, "msg": "redis lock 锁定中" },
+      { "code": 133, "msg": "撤销置顶消息失败" },
+      { "code": 134, "msg": "创建红包失败." },
+      { "code": 135, "msg": "群组当前红包额度不足" },
+      { "code": 136, "msg": "紅包活動未開啟." },
+      { "code": 137, "msg": "更新最后已读失败." },
+      { "code": 139, "msg": "进入系统群失败." },
+      { "code": 140, "msg": "进入聊天列表失败." },
+      { "code": 141, "msg": "进入我的信息失败." },
+      { "code": 142, "msg": "获取历史消息失败." },
+      { "code": 143, "msg": "更新系统消息已读失败." },
+      { "code": 144, "msg": "彩票用户尚有打码, 导致红包创建失败" },
+      { "code": 145, "msg": "搶紅包 - 紅包不存在." },
+      { "code": 146, "msg": "搶紅包 - 紅包已過期" },
+      { "code": 147, "msg": "搶紅包 - 不明原因領取失敗." },
+      { "code": 148, "msg": "断线重连Token非法或已超时" },
+      { "code": 149, "msg": "断线重连失败." },
+      { "code": 150, "msg": "群置顶失败" },
+      { "code": 151, "msg": "取消群置顶失败" },
+      { "code": 152, "msg": "重复登入" },
+      { "code": 153, "msg": "申请加入群组失败" },
+      { "code": 154, "msg": "申请退出群组失败" },
+      { "code": 155, "msg": "取我的聊天群失败" },
+      { "code": 156, "msg": "取大厅群失败" },
+      { "code": 157, "msg": "进入大厅失败" }
+    ]
+  },
+  "servers": [],
+  "security": []
+}

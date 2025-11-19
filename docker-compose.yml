@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  cp-chat-service:
+    container_name: cp-chat
+    image: cp-chat:latest
+    build:
+      context: .
+    volumes:
+      - ./:/opt/www
+    ports:
+      - "9501:9501"
+      - "9502:9502"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # 仅供连接宿主MySQL用
+    environment:
+      DB_DRIVER: mysql
+      DB_HOST: host.docker.internal
+      DB_PORT: 3306
+      DB_DATABASE: cp_chat
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+      # 关键：在容器内使用服务名直连 Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_AUTH: ""   # 如有密码，填这里并在 redis 启动命令启用
+
+    depends_on:
+      redis:
+        condition: service_healthy   # 等 Redis 健康再启动
+
+  redis:
+    container_name: cp-redis
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+networks:
+  default:
+    name: cp-chat
+
