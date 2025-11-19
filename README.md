@@ -93,6 +93,5 @@ Redis: >= 5.0 (需支援Redis Stream)
    5. API的Response请尽量使用CommonResult物件处理, 该物件也经常被用作其他function执行结果的返回值.
    6. WebSocket资料交换的格式分为type(消息类型, string), data(附带的数据, array), 额外的meta栏位是给client使用的自由栏位, 后端不处理, 有收到就直接附带打回给client, 相关物件为MsgType(用于消息类型定义)
       跟MsgPayload(消息载体)
-   7. 避免直接new PDO()或new Redis()的行为, 这些原生方式没有经过Swoole Hook, 在进行资源操作时是会阻塞的
-   8. 框架预设启用Swoole Hook(见bin/hyperf.php), hook行为是拦截底层function呼叫, 并以其他function替代, 大部分资源操作function(档案操作=f开头系列, DB=PDO或Redis等)
+   7. 框架预设启用Swoole Hook(见bin/hyperf.php), hook行为是拦截底层function呼叫, 并以其他function替代, 大部分资源操作function(档案操作=f开头系列, DB=PDO或Redis等)
       被hook过后发生错误时行为是直接抛例外
