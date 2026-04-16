@@ -97,4 +97,4 @@ Redis: >= 5.0 (需支援Redis Stream)
       被hook过后发生错误时行为是直接抛例外
  - 待改進: 
    1. sendMessage時每個client連線使用各自channel進行推送
-   2. 本專案報包含即時判斷各server即時連線數並導向機制,建議另開專案處理
+   2. 本專案未包含即時判斷各server即時連線數並導向機制,建議另開專案處理
