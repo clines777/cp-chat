@@ -95,3 +95,6 @@ Redis: >= 5.0 (需支援Redis Stream)
       跟MsgPayload(消息载体)
    7. 框架预设启用Swoole Hook(见bin/hyperf.php), hook行为是拦截底层function呼叫, 并以其他function替代, 大部分资源操作function(档案操作=f开头系列, DB=PDO或Redis等)
       被hook过后发生错误时行为是直接抛例外
+ - 待改進: 
+   1. sendMessage時每個client連線使用各自channel進行推送
+   2. 本專案報包含即時判斷各server即時連線數並導向機制,建議另開專案處理
