@@ -62,7 +62,7 @@ This will start the cli-server on port `9501`, and bind it to all network interf
 
 **Remember:** you can always replace the contents of this README.md file to something that fits your project description.
 
-===================================================================================================================================================================
+============== 本專案原始碼已徵求公司方同意，得以上傳至個人Github用於展示。===============
 
 PHP版本: 8.3
 Swoole版本: >= 5.1
